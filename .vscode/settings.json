@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "new": "cpp",
+        "type_traits": "cpp"
+    },
+    "cSpell.words": [
+        "newy"
+    ]
+}
