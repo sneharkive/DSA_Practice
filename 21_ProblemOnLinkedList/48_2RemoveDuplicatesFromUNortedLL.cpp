@@ -1,6 +1,6 @@
 /*You are given a linked list of N nodes. Your task is to remove the duplicate nodes from the
 linked list such that every element in the linked list occurs only once.
-In case an element occurs more then  once, only keep it's first occurance in the list*/
+In case an element occurs more then  once, only keep it's first occurrence in the list*/
 //using 2 loops with time complexity = O(n^2)
 #include <iostream>
 using namespace std;

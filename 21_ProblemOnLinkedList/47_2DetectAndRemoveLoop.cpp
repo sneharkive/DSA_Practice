@@ -1,6 +1,6 @@
 /*Given a singly linked list, you have to detect the loop and remove the loop from the linked list, if present.
 You have to make changes in the given linked list itself and return the updated linked list.*/
-//Using Floyd's Clycle Detection Algorithm  //Better Approach
+//Using Floyd's Cycle Detection Algorithm  //Better Approach
 #include <iostream>
 using namespace std;
 class Node{
