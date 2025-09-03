@@ -39,7 +39,7 @@ int HeightOfBinaryTree(node* root){
     return max(left, right) + 1;
 }
 
-int Diameter(node* root){
+int Diameter(node* root){   // Time Complexity => O(n^2)
     if(root == NULL) return 0;
     int op1 = Diameter(root -> left);
     int op2 = Diameter(root -> right);

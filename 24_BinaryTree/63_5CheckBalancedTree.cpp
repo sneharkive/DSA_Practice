@@ -1,7 +1,7 @@
 /*Given a binary tree, find if it is height balanced or not. A tree is height balanced if 
-difference heights of left and right subterres is not more than one for all nodes of tree.
+difference heights of left and right subtrees is not more than one for all nodes of tree.
 So for balanced tree => height of left sub tree - height of right sub tree <= 1 for all nodes
-BY SIR Also not the optimise one*/
+BY SIR Also not the optimize one*/
 
 #include<iostream>
 using namespace std;
