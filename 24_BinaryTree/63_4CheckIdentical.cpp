@@ -28,17 +28,28 @@ node* BuildTree(node* root){
     return root;
 }
 
-int HeightOfBinaryTree(node* root){
-    if(root == NULL) return 0;
-    int left = HeightOfBinaryTree(root -> left);
-    int right = HeightOfBinaryTree(root -> right);
-    return max(left, right) + 1;
+bool isIdentical(node* r1, node* r2){
+  
+  if(r1 == NULL && r2 == NULL )return true;
+  if(r1 != NULL && r2 == NULL )return false;
+  if(r1 == NULL && r2 != NULL )return false;
+
+  bool left = isIdentical(r1 -> left, r2 -> left);
+  bool right = isIdentical(r1 -> right, r2 -> right);
+
+  bool value = r1 -> data == r2 -> data;
+
+  return left && right && value;
 }
 
 int main(){
-    node* root = NULL;
-    root = BuildTree(root); //creating a Tree
+    node* r1 = NULL;
+    node* r2 = NULL;
+    r1 = BuildTree(r1); //creating a Tree
     //input =>  1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
-    
-    cout << endl <<"Height of the Binary Tree is : " << HeightOfBinaryTree(root);
+
+    r2 = BuildTree(r2); //creating a Tree
+
+
+    cout<< "Identical Check : " << isIdentical(r1, r2);
 }

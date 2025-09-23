@@ -1,6 +1,5 @@
-//Sum of nodes on the longest path from root to leaf node
-
 #include<iostream>
+#include<queue>
 using namespace std;
 
 class node{
@@ -29,31 +28,34 @@ node* BuildTree(node* root){
     return root;
 }
 
-void Solve(node* root, int sum, int &maxSum, int len, int maxLen){
-    if(root == NULL) {
-        if(len > maxLen) {
-            maxLen = len;
-            maxSum = sum;
-        }
-        else if(len == maxLen) maxSum = max(maxSum, sum);
-        return;
-    }
-    sum = sum + root -> data;
-    Solve(root -> left, sum, maxSum, len, maxLen);
-    Solve(root -> right, sum, maxSum, len, maxLen);
+int HeightBT(node* root){
+  if(root == NULL) return 0;
+
+  int leftH = HeightBT(root -> left);
+  int rightH = HeightBT(root -> right);
+
+  int ans = max(leftH, rightH) + 1;
+
+  return ans;
 }
 
-int SumOfLongestPath(node* root){
-    int len = 0, maxLen = 0, sum = 0, maxSum = INT16_MIN;
-    Solve(root, sum, maxSum, len, maxLen);
-    return maxSum;
+bool isBalanced(node* root){
+
+  if(root == NULL) return true;
+
+  bool left = isBalanced(root -> left);
+  bool right = isBalanced(root -> right);
+ 
+  bool diff = abs(HeightBT(root -> left) - HeightBT(root -> right)) <= 1;
+
+  return left && right && diff;
 }
+
 
 int main(){
     node* root = NULL;
     root = BuildTree(root); //creating a Tree
     //input =>  1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 
-    cout << "Sum : " << SumOfLongestPath(root);
-
+    cout<< "Balanced Check : " << isBalanced(root);
 }

@@ -1,7 +1,5 @@
 #include<iostream>
-#include<vector>
 #include<queue>
-#include<map>
 using namespace std;
 
 class node{
@@ -30,30 +28,33 @@ node* BuildTree(node* root){
     return root;
 }
 
-vector <int> BottomView(node* root){
-    vector<int>ans;
-    if(root == NULL) return ans;
-    map <int, int> topNode;
-    queue<pair<node*, int> > q;
-    while(!q.empty()){
-        pair<node* , int> temp = q.front();
-        q.pop();
-        node* frontNode = temp.first;
-        int hd = temp.second;
+int HeightBT(node* root){
+  if(root == NULL) return 0;
 
-        topNode[hd] = frontNode -> data;
-        if(frontNode -> left) q.push(make_pair(frontNode->left, hd-1));
-        if(frontNode -> right) q.push(make_pair(frontNode->right, hd+1));
-    }
-    for(auto i:topNode) ans.push_back(i.second);
-    return ans;
+  int leftH = HeightBT(root -> left);
+  int rightH = HeightBT(root -> right);
+
+  int ans = max(leftH, rightH) + 1;
+
+  return ans;
 }
+
+int DiameterBT(node* root){
+  if(root == NULL) return 0;
+
+  int leftDia = DiameterBT(root -> left);
+  int rightDia = DiameterBT(root -> right);
+  int allDia = HeightBT(root-> left) + HeightBT(root -> right) + 1;
+
+  int ans = max(leftDia, max(rightDia, allDia));
+  return ans;
+}
+
 
 int main(){
     node* root = NULL;
     root = BuildTree(root); //creating a Tree
     //input =>  1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 
-    vector <int> v =  BottomView(root);
-    for(int i : v) cout << i << "  ";
+    cout<< "Height : " << DiameterBT(root);
 }

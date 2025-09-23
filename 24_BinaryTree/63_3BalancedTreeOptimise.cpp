@@ -1,8 +1,5 @@
-/*Given a binary tree & an integer K. Find the number of paths the tree which have their sum equal to K.
-A path my start from any node and end at any node in the downward direction*/
-
 #include<iostream>
-#include<vector>
+#include<queue>
 using namespace std;
 
 class node{
@@ -31,31 +28,41 @@ node* BuildTree(node* root){
     return root;
 }
 
-void Solve(node* root, int k, int &count, vector<int> path){
-    if(root == NULL) return ;
-    path.push_back(root -> data);
-    Solve(root -> left, k, count, path);
-    Solve(root -> right, k, count, path);
+pair<bool, int> isBalancedFast(node* root){
 
-    int size = path.size(), sum = 0;
-    for(int i = size - 1; i >= 0; i--){
-        sum += path[i];
-        if(sum == k) count++;
-    }
-    path.pop_back();
+  if(root == NULL){
+    pair<bool, int> p = make_pair(true, 0);
+    return p;
+  }
+
+  pair<bool, int> leftFast = isBalancedFast(root -> left);
+  pair<bool, int> rightFast = isBalancedFast(root -> right);
+
+  bool left = leftFast.first;
+  bool right = rightFast.first;
+ 
+  bool diff = abs(leftFast.second - rightFast.second) <= 1;
+
+  pair<bool, int> ans;
+
+  ans.second = max(leftFast.second, rightFast.second) + 1;
+
+  ans.first = left && right && diff;
+
+  return ans;
 }
 
-int SumK(node* root, int k){
-    vector<int> path;
-    int count = 0;
-    Solve(root, k, count, path);
+
+bool isBalanced(node* root){
+
+  return isBalancedFast(root).first;
 }
+
 
 int main(){
     node* root = NULL;
     root = BuildTree(root); //creating a Tree
-    /*input =>  
-    1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
-    */
-    
+    //input =>  1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
+
+    cout<< "Balanced Check : " << isBalanced(root);
 }

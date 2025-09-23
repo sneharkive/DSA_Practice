@@ -1,7 +1,5 @@
 #include<iostream>
-#include<vector>
 #include<queue>
-#include<map>
 using namespace std;
 
 class node{
@@ -30,24 +28,22 @@ node* BuildTree(node* root){
     return root;
 }
 
-void solve(node* root, vector<int> &ans, int level){
-    if(root == NULL) return;
-    if(level == ans.size()) ans.push_back(root -> data);
-    solve(root -> left, ans, level + 1);
-    solve(root -> right, ans, level + 1);
+int HeightBT(node* root){
+  if(root == NULL) return 0;
+
+  int leftH = HeightBT(root -> left);
+  int rightH = HeightBT(root -> right);
+
+  int ans = max(leftH, rightH) + 1;
+
+  return ans;
 }
 
-vector <int> LeftView(node* root){
-    vector<int>ans;
-    solve(root, ans, 0);
-    return ans;
-}
 
 int main(){
     node* root = NULL;
     root = BuildTree(root); //creating a Tree
     //input =>  1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 
-    vector <int> v =  LeftView(root);
-    for(int i : v) cout << i << "  ";
+    cout<< "Height : " << HeightBT(root);
 }

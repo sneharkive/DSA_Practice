@@ -1,7 +1,5 @@
 #include<iostream>
-#include<vector>
 #include<queue>
-#include<map>
 using namespace std;
 
 class node{
@@ -30,17 +28,29 @@ node* BuildTree(node* root){
     return root;
 }
 
-void solve(node* root, vector<int> &ans, int level){
-    if(root == NULL) return;
-    if(level == ans.size()) ans.push_back(root -> data);
-    solve(root -> right, ans, level + 1);
-    solve(root -> left, ans, level + 1);
+pair<int, int> diameterFast(node* root){
+    if(root == NULL){
+        pair<int, int> p = make_pair(0, 0);
+        return p;
+    }
+
+    pair<int, int> left = diameterFast(root -> left);
+    pair<int, int> right = diameterFast(root -> right);
+
+    int leftDia = left.first;
+    int rightDia = right.first;
+    int allDia = left.second + right.second + 1;
+    
+    pair<int, int> ans;
+    ans.first = max(leftDia, max(rightDia, allDia));
+    ans.second = max(left.second, right.second) + 1;
+
+    return ans;
 }
 
-vector <int> RightView(node* root){
-    vector<int>ans;
-    solve(root, ans, 0);
-    return ans;
+int DiameterBT(node* root){
+
+  return diameterFast(root).first;
 }
 
 int main(){
@@ -48,6 +58,5 @@ int main(){
     root = BuildTree(root); //creating a Tree
     //input =>  1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 
-    vector <int> v =  RightView(root);
-    for(int i : v) cout << i << "  ";
+    cout<< "Diameter : " << DiameterBT(root);
 }
